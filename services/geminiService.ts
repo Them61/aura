@@ -39,37 +39,3 @@ export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
     return "";
   }
 };
-    const base64Promise = new Promise<string>((resolve, reject) => {
-      reader.onloadend = () => {
-        const base64String = (reader.result as string).split(',')[1];
-        resolve(base64String);
-      };
-      reader.onerror = reject;
-    });
-    reader.readAsDataURL(audioBlob);
-    const base64Data = await base64Promise;
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              mimeType: audioBlob.type || 'audio/webm',
-              data: base64Data
-            }
-          },
-          {
-            text: "Transcris cet audio précisément en français. C'est une question pour un studio de microlocs."
-          }
-        ]
-      }
-    });
-
-    return response.text || "";
-
-  } catch (error) {
-    console.error("Transcription Error:", error);
-    throw error;
-  }
-};
