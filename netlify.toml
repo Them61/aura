@@ -18,5 +18,8 @@
 [build.environment]
   NODE_VERSION = "18"
 
+[functions]
+  skip_functions_cache = true
+
 [[plugins]]
   package = "@netlify/plugin-lighthouse"

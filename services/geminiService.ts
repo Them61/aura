@@ -1,40 +1,25 @@
-import { GoogleGenAI } from "@google/genai";
 import { AGENT_CONTEXT } from "./agentContext";
 
-// Initialize Gemini Client
-const getClient = () => {
-  const apiKey = process.env.API_KEY;
-  if (!apiKey) {
-    console.warn("API Key is missing. Gemini features will not work.");
-    return null;
-  }
-  return new GoogleGenAI({ apiKey });
-};
-
+// Call backend chat API instead of using client-side API key
 export const streamChatResponse = async function* (
   history: { role: string; parts: { text: string }[] }[],
   message: string
 ) {
-  const ai = getClient();
-  if (!ai) return;
-
   try {
-    const chat = ai.chats.create({
-      model: 'gemini-3-pro-preview',
-      config: {
-        thinkingConfig: { thinkingBudget: 1500 }, // Augmentation du budget pour une meilleure analyse
-        systemInstruction: AGENT_CONTEXT.getSystemInstruction(),
-      },
-      history: history,
+    // Call backend Netlify Function
+    const apiEndpoint = import.meta.env.VITE_STRIPE_API_ENDPOINT?.replace('/create-checkout-session', '') || '/api';
+    const response = await fetch(`${apiEndpoint}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ history, message }),
     });
 
-    const result = await chat.sendMessageStream({ message });
-
-    for await (const chunk of result) {
-        if (chunk.text) {
-            yield chunk.text;
-        }
+    if (!response.ok) {
+      throw new Error('Chat API request failed');
     }
+
+    const data = await response.json();
+    yield data.response || "Désolé, je rencontre des difficultés techniques. Vous pouvez nous joindre au 438-933-6195.";
 
   } catch (error) {
     console.error("Gemini Chat Error:", error);
@@ -42,12 +27,18 @@ export const streamChatResponse = async function* (
   }
 };
 
+// For audio transcription, we'll use a simple fallback or create another function
 export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
-  const ai = getClient();
-  if (!ai) return "";
-
   try {
-    const reader = new FileReader();
+    // For now, return empty string as audio transcription requires additional setup
+    // In production, you could use a speech-to-text service like Google Cloud Speech-to-Text
+    console.log("Audio transcription not yet configured");
+    return "";
+  } catch (error) {
+    console.error("Transcription Error:", error);
+    return "";
+  }
+};
     const base64Promise = new Promise<string>((resolve, reject) => {
       reader.onloadend = () => {
         const base64String = (reader.result as string).split(',')[1];

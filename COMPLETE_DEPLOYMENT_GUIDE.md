@@ -109,20 +109,26 @@ CREATE POLICY "Allow authenticated users to read orders"
 2. Click **"Show advanced"** → **"New variable"**
 
 ### Step 4: Add Environment Variables
-Add these **8 environment variables** one by one:
+Add these **7 environment variables** one by one:
 
-| Variable Name | Value |
-|--------------|--------|
-| `GEMINI_API_KEY` | Your Gemini API key from Google AI Studio |
-| `VITE_STRIPE_PUBLISHABLE_KEY` | Your `pk_test_...` key from Stripe Dashboard |
-| `STRIPE_SECRET_KEY` | Your `sk_test_...` key from Stripe Dashboard |
-| `VITE_STRIPE_API_ENDPOINT` | `/api/create-checkout-session` |
-| `SUPABASE_URL` | *(Your Supabase Project URL from Step 4)* |
-| `SUPABASE_ANON_KEY` | *(Your Supabase anon key from Step 4)* |
-| `VITE_DEV_SERVER_URL` | `https://your-site-name.netlify.app` |
-| `URL` | `https://your-site-name.netlify.app` |
+| Variable Name | Value | Type |
+|--------------|--------|------|
+| `GEMINI_API_KEY` | Your Gemini API key from Google AI Studio | 🔒 **PRIVATE** |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | Your `pk_test_...` key from Stripe Dashboard | 🌐 Public |
+| `STRIPE_SECRET_KEY` | Your `sk_test_...` key from Stripe Dashboard | 🔒 **PRIVATE** |
+| `VITE_STRIPE_API_ENDPOINT` | `/api/create-checkout-session` | 🌐 Public |
+| `SUPABASE_URL` | *(Your Supabase Project URL from Step 4)* | 🌐 Public |
+| `SUPABASE_ANON_KEY` | *(Your Supabase anon key from Step 4)* | 🔒 **PRIVATE** |
+| `VITE_DEV_SERVER_URL` | `https://your-site-name.netlify.app` | 🌐 Public |
 
-> **Note**: For `VITE_DEV_SERVER_URL` and `URL`, you can add them after deployment. First deployment will give you the URL.
+**🔒 Private (Secret) Variables** - Only on server/Netlify backend:
+- `GEMINI_API_KEY` - API access to Google's Gemini service
+- `STRIPE_SECRET_KEY` - Full access to Stripe payments (NEVER expose!)
+- `SUPABASE_ANON_KEY` - Database access credentials
+
+> **Note**: 
+> - `URL` is **automatically set by Netlify** with your deployed site URL - don't add it manually!
+> - For `VITE_DEV_SERVER_URL`, you can add it after deployment. Netlify will automatically provide it via the `URL` variable.
 
 ### Step 5: Deploy!
 1. Click **"Deploy aura"**
