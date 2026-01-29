@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura Microlocs - Spécialiste à Québec</title>
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
+        "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
+        "@emailjs/browser": "https://esm.sh/@emailjs/browser@^4.4.1",
+        "@stripe/stripe-js": "https://esm.sh/@stripe/stripe-js@^3.3.0"
+      }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Cal.com base embed script -->
+    <script type="text/javascript">
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      window.tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              aura: {
+                gold: '#C5A059',
+                dark: '#0A0F1C',
+                accent: '#CC5500',
+                light: '#F9F5F0'
+              }
+            },
+            fontFamily: {
+              serif: ['Playfair Display', 'Cormorant Garamond', 'serif'],
+              sans: ['Montserrat', 'sans-serif']
+            }
+          }
+        }
+      };
+    </script>
+    <style>
+      body { background-color: #F9F5F0; color: #0A0F1C; }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f1f1; }
+      ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
+      @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+      .animate-slide-in { animation: slideInRight 0.3s ease-out; }
+    </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

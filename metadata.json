@@ -1,0 +1,7 @@
+{
+  "name": "Aura Microlocs",
+  "description": "Site vitrine luxueux pour Aura Microlocs à Québec. Réservations via Cal.com et chatbot intelligent.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
