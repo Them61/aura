@@ -117,6 +117,9 @@ const Chatbot: React.FC = () => {
       {/* Floating Button */}
       {!isOpen && (
         <button
+          type="button"
+          title="Open chat assistant"
+          aria-label="Open Aura Assistant"
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 bg-aura-accent text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 z-50 flex items-center justify-center"
         >
@@ -133,7 +136,13 @@ const Chatbot: React.FC = () => {
                 <Sparkles size={18} className="text-aura-gold" />
                 <h3 className="font-serif font-bold tracking-wide">Assistant Aura</h3>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:text-aura-accent transition">
+            <button
+              type="button"
+              title="Close chat"
+              aria-label="Close chat assistant"
+              onClick={() => setIsOpen(false)}
+              className="hover:text-aura-accent transition"
+            >
               <X size={20} />
             </button>
           </div>
@@ -187,6 +196,9 @@ const Chatbot: React.FC = () => {
               />
               
               <button
+                type="button"
+                title="Send message"
+                aria-label="Send message"
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputText.trim()}
                 className={`text-aura-accent hover:text-aura-gold transition-colors ${

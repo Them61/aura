@@ -250,18 +250,10 @@ npm run dev:server    # Backend only (port 3003)
   base = "."
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "18"
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"  # Route API calls to functions
+  functions = "netlify/functions"  # ← Defines functions directory here
   
-[[redirects]]
-  from = "/*"
-  to = "/index.html"  # SPA fallback for HashRouter
+[functions]                         # ← Can't redefine [functions] as a table
+  skip_functions_cache = true
 ```
 
 ### Required Environment Variables in Netlify UI
