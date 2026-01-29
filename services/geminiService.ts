@@ -6,16 +6,17 @@ export const streamChatResponse = async function* (
   message: string
 ) {
   try {
-    // Call backend Netlify Function
-    const apiEndpoint = import.meta.env.VITE_STRIPE_API_ENDPOINT?.replace('/create-checkout-session', '') || '/api';
-    const response = await fetch(`${apiEndpoint}/chat`, {
+    // Call backend Netlify Function via /api/chat endpoint
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ history, message }),
     });
 
     if (!response.ok) {
-      throw new Error('Chat API request failed');
+      const errorText = await response.text();
+      console.error(`Chat API error: ${response.status}`, errorText);
+      throw new Error(`Chat API request failed: ${response.status}`);
     }
 
     const data = await response.json();
