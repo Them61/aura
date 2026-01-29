@@ -44,7 +44,11 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
         
         try {
           // Try to fetch real session details from backend
-          const API_ENDPOINT = (import.meta.env as any).VITE_STRIPE_API_ENDPOINT?.replace('/create-checkout-session', '') || 'http://localhost:3003/api';
+          const envEndpoint = (import.meta.env as any).VITE_STRIPE_API_ENDPOINT;
+          const API_ENDPOINT = (envEndpoint && (envEndpoint.startsWith('http') || envEndpoint.startsWith('/'))) 
+            ? envEndpoint.replace('/create-checkout-session', '') 
+            : '/api';
+            
           const response = await fetch(`${API_ENDPOINT}/get-session?session_id=${sessionId}`);
           
           if (response.ok) {

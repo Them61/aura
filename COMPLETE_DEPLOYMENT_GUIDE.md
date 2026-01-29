@@ -79,7 +79,7 @@ CREATE POLICY "Allow authenticated users to read orders"
 3. Copy these values (you'll need them for Netlify):
 
    📋 **Project URL**: `https://xxxxxxxxxxxxx.supabase.co`  
-   📋 **anon public key**: `eyJhbGc...` (long string)
+   📋 **service_role key**: `eyJhbGc...` (long secret string)
 
 4. Keep this tab open for later!
 
@@ -113,13 +113,15 @@ Add these **7 environment variables** one by one:
 
 | Variable Name | Value | Type |
 |--------------|--------|------|
-| `GEMINI_API_KEY` | Your Gemini API key from Google AI Studio | 🔒 **PRIVATE** |
-| `VITE_STRIPE_PUBLISHABLE_KEY` | Your `pk_test_...` key from Stripe Dashboard | 🌐 Public |
-| `STRIPE_SECRET_KEY` | Your `sk_test_...` key from Stripe Dashboard | 🔒 **PRIVATE** |
+| `GEMINI_API_KEY` | Your Gemini API key | 🔒 **PRIVATE** |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | `pk_test_...` (from Stripe) | 🌐 Public |
+| `STRIPE_SECRET_KEY` | `sk_test_...` (from Stripe) | 🔒 **PRIVATE** |
 | `VITE_STRIPE_API_ENDPOINT` | `/api/create-checkout-session` | 🌐 Public |
-| `SUPABASE_URL` | *(Your Supabase Project URL from Step 4)* | 🌐 Public |
-| `SUPABASE_ANON_KEY` | *(Your Supabase anon key from Step 4)* | 🔒 **PRIVATE** |
-| `VITE_DEV_SERVER_URL` | `https://your-site-name.netlify.app` | 🌐 Public |
+| `SUPABASE_URL` | *(Your Supabase Project URL)* | 🌐 Public |
+| `SUPABASE_ANON_KEY` | *(Your Supabase service_role key)* | 🔒 **PRIVATE** |
+| `VITE_DEV_SERVER_URL` | `https://your-site.netlify.app` | 🌐 Public |
+
+> ⚠️ **CRITICAL**: For `VITE_STRIPE_API_ENDPOINT`, do **NOT** put a Stripe key here. It MUST be the text: `/api/create-checkout-session`
 
 **🔒 Private (Secret) Variables** - Only on server/Netlify backend:
 - `GEMINI_API_KEY` - API access to Google's Gemini service

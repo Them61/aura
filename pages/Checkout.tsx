@@ -59,7 +59,11 @@ const Checkout: React.FC<CheckoutProps> = ({ cart, clearCart }) => {
       // Pour Supabase Edge Functions: https://votre-projet.supabase.co/functions/v1/create-checkout-session
       // Pour Vercel/Netlify API Routes: /api/create-checkout-session
       // Pour un serveur Node.js: https://votre-domaine.com/api/create-checkout-session
-      const API_ENDPOINT = import.meta.env.VITE_STRIPE_API_ENDPOINT || '/api/create-checkout-session';
+      const envEndpoint = import.meta.env.VITE_STRIPE_API_ENDPOINT;
+      const API_ENDPOINT = (envEndpoint && (envEndpoint.startsWith('http') || envEndpoint.startsWith('/'))) 
+        ? envEndpoint 
+        : '/api/create-checkout-session';
+        
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
