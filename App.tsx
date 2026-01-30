@@ -1,10 +1,11 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Chatbot from './components/Chatbot';
 import CartDrawer from './components/CartDrawer';
 import { CartItem, Product } from './types';
+import { reportWebVitals } from './services/webVitals';
 
 // Lazy load route components for code splitting
 const Services = lazy(() => import('./pages/Services'));
@@ -44,6 +45,21 @@ function ScrollToTop() {
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Initialize Web Vitals tracking on mount
+  useEffect(() => {
+    reportWebVitals((metric) => {
+      // Send metrics to analytics if needed
+      if (window.gtag) {
+        window.gtag('event', metric.name, {
+          value: Math.round(metric.value),
+          event_category: 'Web Vitals',
+          event_label: metric.id,
+          non_interaction: true,
+        });
+      }
+    });
+  }, []);
 
   const addToCart = (product: Product) => {
     setCart(prev => {

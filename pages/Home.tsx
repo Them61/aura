@@ -60,6 +60,9 @@ const Home: React.FC = () => {
             src="https://i.im.ge/2026/01/16/GwAmAp.Brown-Macro-Coffee-Brand-Guidelines-Presentation.png" 
             alt="Aura Microlocs - Spécialiste cheveux naturels et microlocs à Québec" 
             title="Aura Microlocs Studio"
+            width="1920"
+            height="1080"
+            loading="eager"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-aura-dark/70 via-aura-dark/50 to-aura-dark/80"></div>
