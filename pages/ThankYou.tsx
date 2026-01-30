@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { CheckCircle, Package, ArrowRight, Home, Download } from 'lucide-react';
-
+import { CheckCircle, Package, ArrowRight, Download, Home } from 'lucide-react';
 
 interface CheckoutSession {
   id: string;
@@ -244,8 +243,8 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
                       </p>
                       <p className="text-sm">
                         <span className="font-medium">Email:</span>
-                        <a href="mailto:contact@auramicrolocs.com" className="ml-2 text-aura-dark hover:text-aura-gold transition">
-                          contact@auramicrolocs.com
+                        <a href="mailto:Sikatialice@gmail.com" className="ml-2 text-aura-dark hover:text-aura-gold transition">
+                          Sikatialice@gmail.com
                         </a>
                       </p>
                     </div>

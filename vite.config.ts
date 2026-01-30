@@ -26,6 +26,31 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        minify: 'terser',
+        terserOptions: {
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+          },
+          output: {
+            comments: false,
+          },
+        },
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              'vendor-core': ['react', 'react-dom'],
+              'vendor-routing': ['react-router-dom'],
+              'vendor-stripe': ['@stripe/stripe-js', 'stripe'],
+              'vendor-supabase': ['@supabase/supabase-js'],
+              'vendor-icons': ['lucide-react'],
+            },
+          },
+        },
+        chunkSizeWarningLimit: 1000,
+        reportCompressedSize: false,
       }
     };
 });

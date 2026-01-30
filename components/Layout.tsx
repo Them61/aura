@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag, ChevronRight, ShieldCheck, Mail, Phone } from 'lucide-react';
 
@@ -139,4 +139,4 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
   );
 };
 
-export default Layout;
+export default memo(Layout);

@@ -214,7 +214,7 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
             </div>
 
             <div className="relative group">
-                <button onClick={() => scroll('left')} className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-2xl p-5 rounded-full -ml-4 lg:-ml-8 hover:bg-aura-gold hover:text-white transition duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"><ChevronLeft size={28} /></button>
+                <button type="button" onClick={() => scroll('left')} className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-2xl p-5 rounded-full -ml-4 lg:-ml-8 hover:bg-aura-gold hover:text-white transition duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm" title="Scroll left" aria-label="Scroll products left"><ChevronLeft size={28} /></button>
                 <div ref={scrollContainerRef} className="flex overflow-x-auto gap-8 pb-16 px-4 hide-scrollbar snap-x snap-mandatory scroll-smooth">
                     {products.map((product) => (
                         <div key={product.id} className="min-w-[300px] md:min-w-[360px] snap-center bg-white border border-gray-100 rounded-[2rem] p-6 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col group/card relative overflow-hidden">
@@ -243,7 +243,7 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
                         </div>
                     ))}
                 </div>
-                <button onClick={() => scroll('right')} className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-2xl p-5 rounded-full -mr-4 lg:-mr-8 hover:bg-aura-gold hover:text-white transition duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"><ChevronRight size={28} /></button>
+                <button type="button" onClick={() => scroll('right')} className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-2xl p-5 rounded-full -mr-4 lg:-mr-8 hover:bg-aura-gold hover:text-white transition duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm" title="Scroll right" aria-label="Scroll products right"><ChevronRight size={28} /></button>
             </div>
         </div>
       </section>

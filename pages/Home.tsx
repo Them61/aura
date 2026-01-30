@@ -94,6 +94,8 @@ const Home: React.FC = () => {
               src="https://ik.imagekit.io/u4lig2jm2f/611659544_1555479165656955_6415288038940427528_n%20(1).jpg" 
               alt="Expertise professionnelle en microlocs Aura Studio Québec" 
               title="Pourquoi choisir Aura Microlocs"
+              width="400"
+              height="500"
               loading="lazy"
               className="relative z-10 rounded-lg shadow-2xl object-cover h-[500px] w-full"
             />
@@ -218,15 +220,20 @@ const Home: React.FC = () => {
                   src="https://ik.imagekit.io/u4lig2jm2f/47681581_300619553907971_1846817773863305216_n.jpg" 
                   alt="Réalisation signature Aura Microlocs Québec" 
                   title="Expertise Confiance Aura"
+                  width="300"
+                  height="400"
                   loading="lazy"
                   className="w-full h-full object-cover"
                 />
              </div>
              <img 
                src="https://ik.imagekit.io/u4lig2jm2f/613354850_855481070701426_3628782886450825214_n%20(1).jpg" 
-               className="rounded-xl object-cover h-full opacity-90 hover:opacity-100 transition duration-500 shadow-2xl md:mt-12" 
                alt="Détail entretien microlocs professionnelles Québec" 
                title="Expertise Microlocs Aura"
+               width="300"
+               height="500"
+               loading="lazy"
+               className="rounded-xl object-cover h-full opacity-90 hover:opacity-100 transition duration-500 shadow-2xl md:mt-12" 
              />
           </div>
         </div>
@@ -246,6 +253,8 @@ const Home: React.FC = () => {
                 <button 
                   onClick={() => scroll('left')} 
                   className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-xl p-4 rounded-full -ml-4 lg:-ml-6 hover:bg-aura-gold hover:text-white transition duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+                  title="Scroll left"
+                  aria-label="Scroll carousel left"
                 >
                   <ChevronLeft size={24} />
                 </button>
@@ -266,6 +275,8 @@ const Home: React.FC = () => {
                                 muted 
                                 loop 
                                 playsInline
+                                width="400"
+                                height="500"
                                 className="w-full h-full object-cover transform group-hover/card:scale-105 transition duration-700"
                               />
                             ) : (
@@ -273,6 +284,8 @@ const Home: React.FC = () => {
                                 src={item.url}
                                 alt={item.alt}
                                 title={item.title}
+                                width="400"
+                                height="500"
                                 loading="lazy"
                                 className="w-full h-full object-cover transform group-hover/card:scale-105 transition duration-700"
                               />
@@ -287,6 +300,8 @@ const Home: React.FC = () => {
                 <button 
                   onClick={() => scroll('right')} 
                   className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 shadow-xl p-4 rounded-full -mr-4 lg:-mr-6 hover:bg-aura-gold hover:text-white transition duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+                  title="Scroll right"
+                  aria-label="Scroll carousel right"
                 >
                   <ChevronRight size={24} />
                 </button>

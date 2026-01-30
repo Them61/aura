@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState, lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Checkout from './pages/Checkout';
-import ThankYou from './pages/ThankYou';
 import Chatbot from './components/Chatbot';
 import CartDrawer from './components/CartDrawer';
 import { CartItem, Product } from './types';
 
-// Composant utilitaire pour gérer le défilement lors de la navigation
+// Lazy load route components for code splitting
+const Services = lazy(() => import('./pages/Services'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const ThankYou = lazy(() => import('./pages/ThankYou'));
+
+// Simple loading fallback component
+const RouteLoader = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="text-center">
+      <div className="w-12 h-12 border-4 border-aura-gold/20 border-t-aura-gold rounded-full animate-spin mx-auto mb-4"></div>
+      <p className="text-gray-500">Chargement...</p>
+    </div>
+  </div>
+);
+
+// Optimize scroll behavior - use instant scroll instead of smooth for better performance
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
   React.useEffect(() => {
     if (!hash) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0 });
     } else {
       const id = hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView();
       }
     }
   }, [pathname, hash]);
@@ -67,13 +79,15 @@ function App() {
         cartCount={cart.reduce((acc, i) => acc + i.quantity, 0)} 
         onCartClick={() => setIsCartOpen(true)}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services addToCart={addToCart} />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} />} />
-          <Route path="/checkout/success" element={<ThankYou clearCart={clearCart} />} />
-        </Routes>
+        <Suspense fallback={<RouteLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services addToCart={addToCart} />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} />} />
+            <Route path="/checkout/success" element={<ThankYou clearCart={clearCart} />} />
+          </Routes>
+        </Suspense>
         <Chatbot />
         <CartDrawer 
           isOpen={isCartOpen} 

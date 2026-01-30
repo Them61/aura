@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { X, ShoppingBag, Trash2, CreditCard, Lock, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { CartItem } from '../types';
@@ -39,7 +39,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
             <ShoppingBag className="mr-3 text-aura-gold" size={24} />
             <h2 className="font-serif text-2xl font-bold tracking-tight">Votre Panier</h2>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition">
+          <button type="button" onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition" title="Close cart" aria-label="Close shopping cart">
             <X size={24} />
           </button>
         </div>
@@ -52,7 +52,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                 <ShoppingBag size={40} />
               </div>
               <p className="text-gray-400 font-medium">Votre panier est encore vide</p>
-              <button onClick={onClose} className="bg-aura-dark text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-aura-gold transition shadow-md">
+              <button type="button" onClick={onClose} className="bg-aura-dark text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-aura-gold transition shadow-md" title="Continue shopping">
                 Continuer la visite
               </button>
             </div>
@@ -66,7 +66,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                   <div className="flex-1 space-y-2">
                     <div className="flex justify-between items-start">
                       <h4 className="font-bold text-aura-dark text-lg leading-tight">{item.name}</h4>
-                      <button onClick={() => removeFromCart(item.id)} className="text-gray-300 hover:text-red-500 transition p-1">
+                      <button type="button" onClick={() => removeFromCart(item.id)} className="text-gray-300 hover:text-red-500 transition p-1" title="Remove from cart">
                         <Trash2 size={18} />
                       </button>
                     </div>
@@ -122,4 +122,4 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   );
 };
 
-export default CartDrawer;
+export default memo(CartDrawer);

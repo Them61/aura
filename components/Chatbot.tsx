@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import { MessageCircle, X, Send, Mic, Loader2, Sparkles } from 'lucide-react';
 import { streamChatResponse, transcribeAudio } from '../services/geminiService';
 import { ChatMessage } from '../types';
+
+const MAX_MESSAGES = 50; // Prevent unbounded memory growth
 
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +19,9 @@ const Chatbot: React.FC = () => {
   const audioChunksRef = useRef<Blob[]>([]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+    });
   };
 
   useEffect(() => {
@@ -51,7 +55,11 @@ const Chatbot: React.FC = () => {
       let fullResponse = "";
       
       // Add initial empty model message
-      setMessages(prev => [...prev, { id: modelMessageId, role: 'model', text: '', isThinking: true }]);
+      setMessages(prev => {
+        const updated = [...prev, { id: modelMessageId, role: 'model', text: '', isThinking: true }];
+        // Limit message history to prevent memory leaks
+        return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+      });
 
       for await (const chunk of stream) {
         fullResponse += chunk;
@@ -215,4 +223,4 @@ const Chatbot: React.FC = () => {
   );
 };
 
-export default Chatbot;
+export default memo(Chatbot);
