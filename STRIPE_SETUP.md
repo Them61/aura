@@ -150,14 +150,16 @@ export default async function handler(req: any, res: any) {
 }
 ```
 
-### 4. Configurer les webhooks (optionnel mais recommandé)
+### 4. Configurer les webhooks (Essentiel pour la fiabilité)
 
-Pour mettre à jour automatiquement le statut des commandes après paiement :
+Si vous recevez des erreurs de Stripe concernant une URL Supabase (ex: `lbqdgxxiaudvhjjpsmdx.supabase.co`), c'est qu'une ancienne configuration est active. Voici comment passer sur Netlify :
 
 1. Dans le [Tableau de bord Stripe](https://dashboard.stripe.com/webhooks)
-2. Créez un webhook pointant vers votre endpoint
-3. Sélectionnez l'événement `checkout.session.completed`
-4. Mettez à jour votre base de données quand le webhook est reçu
+2. Supprimez l'ancien webhook Supabase s'il existe.
+3. Créez un nouvel endpoint pointant vers : `https://votre-site.netlify.app/api/stripe-webhook`
+4. Sélectionnez l'événement : `checkout.session.completed`
+5. Copiez la **Clé secrète de signature** (Signing Secret) qui commence par `whsec_`.
+6. Ajoutez cette clé dans vos variables d'environnement Netlify sous le nom : `STRIPE_WEBHOOK_SECRET`.
 
 ## 🧪 Mode test
 

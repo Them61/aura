@@ -251,6 +251,16 @@ SELECT SUM(amount_total) / 100.0 as total_revenue FROM orders;
 - Check that `STRIPE_SECRET_KEY` is set in Netlify
 - Verify API endpoint is `/api/create-checkout-session`
 
+### Stripe Webhook Failures (Email from Stripe)
+If you received an email about webhook failures at a Supabase URL:
+1. This is because Stripe is still trying to talk to an old Supabase project.
+2. Go to [Stripe Webhooks](https://dashboard.stripe.com/webhooks).
+3. **Delete** the old webhook URL (`...supabase.co/functions/...`).
+4. **Add a new endpoint**:
+   - **URL**: `https://your-site-name.netlify.app/api/stripe-webhook`
+   - **Events**: `checkout.session.completed`
+5. Get the **Webhook Secret** (starts with `whsec_`) and add it to Netlify Environment Variables as `STRIPE_WEBHOOK_SECRET`.
+
 ### Orders Not Saving to Database
 - Check Netlify Function logs: **Functions** tab
 - Verify `SUPABASE_URL` and `SUPABASE_ANON_KEY` are correct
