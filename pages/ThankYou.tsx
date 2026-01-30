@@ -109,9 +109,9 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
           amount_total: 0,
           currency: 'cad',
           payment_status: 'paid',
-          });
-        }
+        });
       }
+      
       setIsLoading(false);
     };
 
