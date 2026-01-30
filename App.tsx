@@ -7,11 +7,13 @@ import CartDrawer from './components/CartDrawer';
 import { CartItem, Product } from './types';
 import { reportWebVitals } from './services/webVitals';
 
-// Lazy load route components for code splitting
+// Lazy load components to reduce main-thread blocking
 const Services = lazy(() => import('./pages/Services'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
+const Chatbot = lazy(() => import('./components/Chatbot'));
+const CartDrawer = lazy(() => import('./components/CartDrawer'));
 
 // Simple loading fallback component
 const RouteLoader = () => (
@@ -104,15 +106,19 @@ function App() {
             <Route path="/checkout/success" element={<ThankYou clearCart={clearCart} />} />
           </Routes>
         </Suspense>
-        <Chatbot />
-        <CartDrawer 
-          isOpen={isCartOpen} 
-          onClose={() => setIsCartOpen(false)} 
-          cart={cart}
-          removeFromCart={removeFromCart}
-          updateQuantity={updateQuantity}
-          clearCart={clearCart}
-        />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
+        <Suspense fallback={null}>
+          <CartDrawer 
+            isOpen={isCartOpen} 
+            onClose={() => setIsCartOpen(false)} 
+            cart={cart}
+            removeFromCart={removeFromCart}
+            updateQuantity={updateQuantity}
+            clearCart={clearCart}
+          />
+        </Suspense>
       </Layout>
     </Router>
   );

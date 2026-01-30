@@ -1,20 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Clock, Heart, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { throttle } from '../services/performanceUtils';
 
 const Home: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const { current } = scrollContainerRef;
-      const scrollAmount = 400;
-      current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
+  const scroll = useCallback(
+    throttle((direction: 'left' | 'right') => {
+      if (scrollContainerRef.current) {
+        const { current } = scrollContainerRef;
+        const scrollAmount = 400;
+        current.scrollBy({
+          left: direction === 'left' ? -scrollAmount : scrollAmount,
+          behavior: 'smooth'
+        });
+      }
+    }, 150),
+    []
+  );
 
   const realizations = [
     {
