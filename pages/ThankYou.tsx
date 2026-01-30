@@ -34,70 +34,81 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
   const sessionId = searchParams.get('session_id');
   const [session, setSession] = useState<CheckoutSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchSessionDetails = async () => {
-      if (sessionId) {
-        // Clear the cart since the purchase was successful
-        clearCart();
+      if (!sessionId) {
+        // No session ID - this shouldn't happen after successful payment
+        setError('Aucun ID de session fourni. Votre paiement peut ne pas avoir été confirmé.');
+        setIsLoading(false);
+        return;
+      }
+
+      // Clear the cart since the purchase was successful
+      clearCart();
+      
+      try {
+        console.log('Fetching session details for:', sessionId);
         
-        try {
-          // Try to fetch real session details from backend
-          const envEndpoint = (import.meta.env as any).VITE_STRIPE_API_ENDPOINT;
-          const API_ENDPOINT = (envEndpoint && (envEndpoint.startsWith('http') || envEndpoint.startsWith('/'))) 
-            ? envEndpoint.replace('/create-checkout-session', '') 
-            : '/api';
+        // Try to fetch real session details from backend
+        const API_ENDPOINT = '/.netlify/functions/get-session';
             
-          const response = await fetch(`${API_ENDPOINT}/get-session?session_id=${sessionId}`);
-          
-          if (response.ok) {
-            const sessionData = await response.json();
-            setSession(sessionData);
+        const response = await fetch(`${API_ENDPOINT}?session_id=${sessionId}`);
+        
+        console.log('Session fetch response:', response.status);
+        
+        if (response.ok) {
+          const sessionData = await response.json();
+          console.log('Session data received:', sessionData);
+          setSession(sessionData);
 
-            // Save order to Supabase
-            try {
-              const orderData = {
-                session_id: sessionData.id,
-                customer_email: sessionData.customer_email || sessionData.customer_details?.email,
-                customer_name: sessionData.customer_details?.name,
-                items: sessionData.line_items?.data || [],
-                amount_total: sessionData.amount_total,
-                currency: sessionData.currency,
-                payment_status: sessionData.payment_status,
-              };
+          // Save order to Supabase
+          try {
+            const orderData = {
+              session_id: sessionData.id,
+              customer_email: sessionData.customer_email || sessionData.customer_details?.email,
+              customer_name: sessionData.customer_details?.name,
+              items: sessionData.line_items?.data || [],
+              amount_total: sessionData.amount_total,
+              currency: sessionData.currency,
+              payment_status: sessionData.payment_status,
+            };
 
-              const saveOrderResponse = await fetch(`${API_ENDPOINT}/save-order`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData),
-              });
-
-              if (!saveOrderResponse.ok) {
-                console.error('Failed to save order to database');
-              }
-            } catch (saveError) {
-              console.error('Error saving order:', saveError);
-              // Continue even if saving fails - the payment already succeeded
-            }
-          } else {
-            // Fallback to generic success message if API fails
-            setSession({
-              id: sessionId,
-              customer_email: 'customer@example.com',
-              amount_total: 0,
-              currency: 'cad',
-              payment_status: 'paid',
+            const saveOrderResponse = await fetch('/.netlify/functions/save-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(orderData),
             });
+
+            if (!saveOrderResponse.ok) {
+              console.error('Failed to save order to database');
+            }
+          } catch (saveError) {
+            console.error('Error saving order:', saveError);
+            // Continue even if saving fails - the payment already succeeded
           }
-        } catch (error) {
-          console.error('Error fetching session details:', error);
-          // Fallback to generic success message
+        } else {
+          console.warn('Session fetch returned status:', response.status);
+          // Fallback to generic success message if API fails
           setSession({
             id: sessionId,
             customer_email: 'customer@example.com',
             amount_total: 0,
             currency: 'cad',
             payment_status: 'paid',
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching session details:', error);
+        setError('Erreur lors de la récupération des détails de la commande. Votre paiement a probablement été effectué avec succès.');
+        // Fallback to generic success message
+        setSession({
+          id: sessionId,
+          customer_email: 'customer@example.com',
+          amount_total: 0,
+          currency: 'cad',
+          payment_status: 'paid',
           });
         }
       }
@@ -118,9 +129,41 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
     );
   }
 
+  if (!sessionId) {
+    return (
+      <div className="min-h-screen bg-aura-light/30 flex items-center justify-center p-4">
+        <div className="bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 text-center max-w-md">
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={48} className="text-red-600" />
+          </div>
+          <h1 className="font-serif text-2xl md:text-3xl text-aura-dark font-bold mb-4">
+            Erreur de session
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Nous n'avons pas pu localiser votre session de paiement. Votre paiement a peut-être échoué ou la session a expiré.
+          </p>
+          <div className="space-y-3">
+            <Link to="/checkout" className="block bg-aura-dark text-white px-6 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-aura-gold transition">
+              Retour au paiement
+            </Link>
+            <Link to="/services" className="block bg-aura-light text-aura-dark px-6 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-aura-gold transition">
+              Continuer la visite
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-aura-light/30 py-12 md:py-20 font-sans">
       <div className="max-w-4xl mx-auto px-4">
+        {error && (
+          <div className="bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-4 mb-8 text-yellow-800">
+            <p className="font-medium">⚠️ {error}</p>
+          </div>
+        )}
+        
         {/* Success Animation */}
         <div className="text-center mb-12 animate-fade-in">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
