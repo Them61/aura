@@ -31,6 +31,16 @@ export const handler: Handler = async (event) => {
     };
   }
 
+  // Check for configuration
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+    console.error('CRITICAL: Supabase environment variables are missing');
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Server configuration error' }),
+    };
+  }
+
   try {
     const orderData = JSON.parse(event.body || '{}');
 

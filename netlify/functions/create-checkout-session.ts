@@ -30,31 +30,69 @@ export const handler: Handler = async (event) => {
     };
   }
 
+  // Check for configuration
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('CRITICAL: STRIPE_SECRET_KEY is missing');
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Server configuration error' }),
+    };
+  }
+
   try {
-    const { items } = JSON.parse(event.body || '{}');
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Empty request body' }),
+      };
+    }
+
+    const { items, email, name: customerName } = JSON.parse(event.body);
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Items are required' }),
+        body: JSON.stringify({ error: 'Items are required and must be an array' }),
       };
     }
 
+    // Determine if items are already in Stripe format or simplified
+    const line_items = items.map((item) => {
+      // If it's already in Stripe format (from frontend)
+      if (item.price_data) {
+        return {
+          price_data: {
+            ...item.price_data,
+            currency: 'cad', // Force CAD
+            unit_amount: Math.round(item.price_data.unit_amount), // Ensure integer
+          },
+          quantity: item.quantity || 1,
+        };
+      }
+      
+      // If it's simplified format
+      const price = typeof item.price === 'string' ? parseFloat(item.price) : item.price;
+      return {
+        price_data: {
+          currency: 'cad',
+          product_data: {
+            name: item.name || 'Produit Aura',
+            description: item.description || '',
+          },
+          unit_amount: Math.round(price * 100),
+        },
+        quantity: item.quantity || 1,
+      };
+    });
+
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
+      customer_email: email,
       payment_method_types: ['card'],
-      line_items: items.map((item) => ({
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: item.name,
-            description: item.description,
-          },
-          unit_amount: Math.round(item.price * 100), // Convert to cents
-        },
-        quantity: item.quantity,
-      })),
+      line_items,
       mode: 'payment',
       success_url: `${process.env.URL || 'http://localhost:3000'}/#/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.URL || 'http://localhost:3000'}/#/checkout`,
@@ -63,10 +101,13 @@ export const handler: Handler = async (event) => {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ url: session.url }),
+      body: JSON.stringify({ 
+        id: session.id, // For legacy redirectToCheckout
+        url: session.url // For modern direct redirect
+      }),
     };
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    console.error('Error creating checkout session details:', error);
     return {
       statusCode: 500,
       headers,

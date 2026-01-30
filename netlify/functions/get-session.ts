@@ -30,6 +30,16 @@ export const handler: Handler = async (event) => {
     };
   }
 
+  // Check for configuration
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('CRITICAL: STRIPE_SECRET_KEY is missing');
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Server configuration error' }),
+    };
+  }
+
   try {
     const sessionId = event.queryStringParameters?.session_id;
 
