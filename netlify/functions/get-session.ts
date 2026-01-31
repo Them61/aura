@@ -44,6 +44,7 @@ export const handler: Handler = async (event) => {
     const sessionId = event.queryStringParameters?.session_id;
 
     if (!sessionId) {
+      console.error('Missing session_id parameter');
       return {
         statusCode: 400,
         headers,
@@ -51,10 +52,14 @@ export const handler: Handler = async (event) => {
       };
     }
 
+    console.log('Retrieving session:', sessionId);
+
     // Retrieve the session with line items
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ['line_items', 'line_items.data.price.product'],
     });
+
+    console.log('Session retrieved successfully:', session.id);
 
     return {
       statusCode: 200,
@@ -63,11 +68,18 @@ export const handler: Handler = async (event) => {
     };
   } catch (error) {
     console.error('Error retrieving session:', error);
+    
+    // Provide more detailed error information
+    const errorMessage = error instanceof Error ? error.message : 'Failed to retrieve session';
+    const errorType = error instanceof Error ? error.constructor.name : 'UnknownError';
+    
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Failed to retrieve session' 
+        error: errorMessage,
+        type: errorType,
+        details: 'Check Netlify function logs for more information'
       }),
     };
   }

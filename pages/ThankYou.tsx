@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle, Package, ArrowRight, Download, Home } from 'lucide-react';
 
@@ -35,8 +35,15 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
   const [session, setSession] = useState<CheckoutSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple executions
+    if (hasFetchedRef.current) {
+      return;
+    }
+    hasFetchedRef.current = true;
+
     const fetchSessionDetails = async () => {
       if (!sessionId) {
         // No session ID - this shouldn't happen after successful payment
@@ -45,7 +52,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
         return;
       }
 
-      // Clear the cart since the purchase was successful
+      // Clear the cart once
       clearCart();
       
       try {
@@ -53,44 +60,76 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
         
         // Try to fetch real session details from backend
         const API_ENDPOINT = '/.netlify/functions/get-session';
-            
-        const response = await fetch(`${API_ENDPOINT}?session_id=${sessionId}`);
         
-        console.log('Session fetch response:', response.status);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
         
-        if (response.ok) {
-          const sessionData = await response.json();
-          console.log('Session data received:', sessionData);
-          setSession(sessionData);
+        try {
+          const response = await fetch(`${API_ENDPOINT}?session_id=${sessionId}`, {
+            signal: controller.signal,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          
+          clearTimeout(timeoutId);
+          console.log('Session fetch response:', response.status);
+          
+          if (response.ok) {
+            const sessionData = await response.json();
+            console.log('Session data received:', sessionData);
+            setSession(sessionData);
 
-          // Save order to Supabase
-          try {
-            const orderData = {
-              session_id: sessionData.id,
-              customer_email: sessionData.customer_email || sessionData.customer_details?.email,
-              customer_name: sessionData.customer_details?.name,
-              items: sessionData.line_items?.data || [],
-              amount_total: sessionData.amount_total,
-              currency: sessionData.currency,
-              payment_status: sessionData.payment_status,
-            };
+            // Save order to Supabase (non-blocking)
+            try {
+              const orderData = {
+                session_id: sessionData.id,
+                customer_email: sessionData.customer_email || sessionData.customer_details?.email,
+                customer_name: sessionData.customer_details?.name,
+                items: sessionData.line_items?.data || [],
+                amount_total: sessionData.amount_total,
+                currency: sessionData.currency,
+                payment_status: sessionData.payment_status,
+              };
 
-            const saveOrderResponse = await fetch('/.netlify/functions/save-order', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(orderData),
-            });
+              const saveOrderResponse = await fetch('/.netlify/functions/save-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData),
+              });
 
-            if (!saveOrderResponse.ok) {
-              console.error('Failed to save order to database');
+              if (!saveOrderResponse.ok) {
+                const errorText = await saveOrderResponse.text();
+                console.error('Failed to save order to database:', saveOrderResponse.status, errorText);
+              } else {
+                console.log('Order saved successfully');
+              }
+            } catch (saveError) {
+              console.error('Error saving order:', saveError);
+              // Continue even if saving fails - the payment already succeeded
             }
-          } catch (saveError) {
-            console.error('Error saving order:', saveError);
-            // Continue even if saving fails - the payment already succeeded
+          } else {
+            const errorText = await response.text();
+            console.warn('Session fetch returned status:', response.status, errorText);
+            // Fallback to generic success message if API fails
+            setSession({
+              id: sessionId,
+              customer_email: 'customer@example.com',
+              amount_total: 0,
+              currency: 'cad',
+              payment_status: 'paid',
+            });
           }
-        } else {
-          console.warn('Session fetch returned status:', response.status);
-          // Fallback to generic success message if API fails
+        } catch (fetchError) {
+          clearTimeout(timeoutId);
+          if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+            console.error('Request timeout - session fetch took too long');
+            setError('La requête a pris trop de temps. Vérifiez votre connexion internet.');
+          } else {
+            console.error('Network error fetching session:', fetchError);
+            setError('Erreur réseau lors de la connexion au serveur.');
+          }
+          // Fallback to generic success message
           setSession({
             id: sessionId,
             customer_email: 'customer@example.com',
@@ -99,9 +138,9 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
             payment_status: 'paid',
           });
         }
-      } catch (error) {
-        console.error('Error fetching session details:', error);
-        setError('Erreur lors de la récupération des détails de la commande. Votre paiement a probablement été effectué avec succès.');
+      } catch (outerError) {
+        console.error('Unexpected error in fetchSessionDetails:', outerError);
+        setError('Une erreur inattendue s\'est produite. Votre paiement a été traité avec succès.');
         // Fallback to generic success message
         setSession({
           id: sessionId,
@@ -116,7 +155,7 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
     };
 
     fetchSessionDetails();
-  }, [sessionId, clearCart]);
+  }, [sessionId]);
 
   if (isLoading) {
     return (
