@@ -57,12 +57,12 @@ const Checkout: React.FC<CheckoutProps> = ({ cart, clearCart }) => {
       // IMPORTANT: Ne jamais exposer la clé secrète dans le code frontend
       // 
       // Pour Supabase Edge Functions: https://votre-projet.supabase.co/functions/v1/create-checkout-session
-      // Pour Vercel/Netlify API Routes: /api/create-checkout-session
+      // Pour Vercel/Netlify API Routes: /api/create-checkout-session or /.netlify/functions/create-checkout-session
       // Pour un serveur Node.js: https://votre-domaine.com/api/create-checkout-session
       const envEndpoint = import.meta.env.VITE_STRIPE_API_ENDPOINT;
       const API_ENDPOINT = (envEndpoint && (envEndpoint.startsWith('http') || envEndpoint.startsWith('/'))) 
         ? envEndpoint 
-        : '/api/create-checkout-session';
+        : '/.netlify/functions/create-checkout-session';
         
       const response = await fetch(API_ENDPOINT, {
         method: 'POST',
@@ -92,18 +92,25 @@ const Checkout: React.FC<CheckoutProps> = ({ cart, clearCart }) => {
       }
 
       const session = await response.json();
-      const stripe = await stripePromise;
       
-      if (!stripe) {
-        throw new Error('Stripe n\'a pas pu être initialisé');
-      }
-
-      const { error } = await stripe.redirectToCheckout({ 
-        sessionId: session.id 
-      });
-
-      if (error) {
-        throw error;
+      // Use modern direct redirect to Stripe Checkout
+      if (session.url) {
+        // Redirect to Stripe's hosted checkout page
+        window.location.href = session.url;
+      } else if (session.id) {
+        // Fallback to legacy method if needed
+        const stripe = await stripePromise;
+        if (!stripe) {
+          throw new Error('Stripe n\'a pas pu être initialisé');
+        }
+        const { error } = await stripe.redirectToCheckout({ 
+          sessionId: session.id 
+        });
+        if (error) {
+          throw error;
+        }
+      } else {
+        throw new Error('Session invalide reçue du serveur');
       }
 
     } catch (err: any) {
