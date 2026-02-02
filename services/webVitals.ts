@@ -99,9 +99,14 @@ export function reportWebVitals(callback?: (metric: Metric) => void) {
           console.log(`Web Vital [${metric.name}]:`, metric.value, metric.rating);
         }
       });
-      
-      observer.observe({ type: 'first-input', buffered: true });
-      observer.observe({ type: 'interaction', buffered: true });
+
+      const supportedEntryTypes = (PerformanceObserver as any).supportedEntryTypes || [];
+      if (supportedEntryTypes.includes('first-input')) {
+        observer.observe({ type: 'first-input', buffered: true });
+      }
+      if (supportedEntryTypes.includes('interaction')) {
+        observer.observe({ type: 'interaction', buffered: true });
+      }
     } catch (e) {
       // PerformanceObserver not supported
     }

@@ -98,7 +98,7 @@ export const handler: Handler = async (event) => {
       phone_number_collection: {
         enabled: true,
       },
-      success_url: `${process.env.URL || 'http://localhost:3000'}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.URL || 'http://localhost:3000'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.URL || 'http://localhost:3000'}/checkout`,
       metadata: {
         customer_name: customerName || '',
