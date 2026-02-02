@@ -3,14 +3,22 @@ import { AGENT_CONTEXT } from "./agentContext";
 // Call backend chat API instead of using client-side API key
 export const streamChatResponse = async function* (
   history: { role: string; parts: { text: string }[] }[],
-  message: string
+  message: string,
+  systemInstruction?: string
 ) {
   try {
+    // Use agent context system instruction if not provided
+    const instruction = systemInstruction || AGENT_CONTEXT.getSystemInstruction();
+
     // Call backend Netlify Function via /api/chat endpoint
-    const response = await fetch('/api/chat', {
+    const response = await fetch('/.netlify/functions/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ history, message }),
+      body: JSON.stringify({ 
+        history, 
+        message,
+        systemInstruction: instruction 
+      }),
     });
 
     if (!response.ok) {

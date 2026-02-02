@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
 import { MessageCircle, X, Send, Mic, Loader2, Sparkles } from 'lucide-react';
 import { streamChatResponse, transcribeAudio } from '../services/geminiService';
+import { AGENT_CONTEXT } from '../services/agentContext';
 import { ChatMessage } from '../types';
 
 const MAX_MESSAGES = 50; // Prevent unbounded memory growth
@@ -48,8 +49,11 @@ const Chatbot: React.FC = () => {
         parts: [{ text: m.text }]
       }));
 
-      // Stream response
-      const stream = streamChatResponse(history, userMessage.text);
+      // Add system instruction with agent context
+      const systemInstruction = AGENT_CONTEXT.getSystemInstruction();
+
+      // Stream response with context
+      const stream = streamChatResponse(history, userMessage.text, systemInstruction);
       
       const modelMessageId = (Date.now() + 1).toString();
       let fullResponse = "";

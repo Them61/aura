@@ -41,7 +41,7 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    const { history, message } = JSON.parse(event.body || '{}');
+    const { history, message, systemInstruction } = JSON.parse(event.body || '{}');
 
     if (!message) {
       return {
@@ -54,11 +54,8 @@ export const handler: Handler = async (event) => {
     // Initialize Gemini client
     const ai = new GoogleGenAI({ apiKey });
 
-    // Create chat with Gemini
-    const chat = ai.chats.create({
-      model: 'gemini-2.0-flash',
-      config: {
-        systemInstruction: `You are an expert stylist assistant for Aura Microlocs, a professional locs hair care and styling service located in Montreal, Canada.
+    // Use provided system instruction or default
+    const finalSystemInstruction = systemInstruction || `You are an expert stylist assistant for Aura Microlocs, a professional locs hair care and styling service located in Montreal, Canada.
 
 Your role is to:
 1. Help customers understand locs services and pricing
@@ -79,7 +76,13 @@ Business Info:
 - Phone: 438-933-6195
 - Always respond in the same language the customer uses (French or English)
 
-Always be friendly, professional, and knowledgeable. If asked about services not offered, politely explain what we do offer instead.`,
+Always be friendly, professional, and knowledgeable. If asked about services not offered, politely explain what we do offer instead.`;
+
+    // Create chat with Gemini
+    const chat = ai.chats.create({
+      model: 'gemini-2.0-flash',
+      config: {
+        systemInstruction: finalSystemInstruction,
       },
       history: history || [],
     });
