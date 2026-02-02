@@ -233,15 +233,17 @@ const Home: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
              </div>
-             <img 
-               src="https://ik.imagekit.io/u4lig2jm2f/613354850_855481070701426_3628782886450825214_n%20(1).jpg" 
-               alt="Détail entretien microlocs professionnelles Québec" 
-               title="Expertise Microlocs Aura"
-               width="300"
-               height="500"
-               loading="lazy"
-               className="rounded-xl object-cover h-full opacity-90 hover:opacity-100 transition duration-500 shadow-2xl md:mt-12" 
-             />
+             <div className="rounded-xl overflow-hidden aspect-[9/16] shadow-2xl border border-white/10 bg-white/5 mt-6 md:mt-12">
+               <img 
+                 src="https://ik.imagekit.io/u4lig2jm2f/613354850_855481070701426_3628782886450825214_n%20(1).jpg" 
+                 alt="Détail entretien microlocs professionnelles Québec" 
+                 title="Expertise Microlocs Aura"
+                 width="300"
+                 height="500"
+                 loading="lazy"
+                 className="w-full h-full object-cover opacity-90 hover:opacity-100 transition duration-500"
+               />
+             </div>
           </div>
         </div>
       </section>

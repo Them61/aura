@@ -2,8 +2,6 @@ import React, { useState, lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import Chatbot from './components/Chatbot';
-import CartDrawer from './components/CartDrawer';
 import { CartItem, Product } from './types';
 import { reportWebVitals } from './services/webVitals';
 
