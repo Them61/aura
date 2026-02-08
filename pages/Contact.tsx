@@ -13,7 +13,28 @@ declare global {
   }
 }
 
-type ServiceKey = 'resserage' | 'installation' | 'entretien';
+type ServiceKey =
+  | 'resserage'
+  | 'installation'
+  | 'entretien'
+  | 'soin'
+  | 'coloration'
+  | 'transformation'
+  | 'lavage'
+  | 'consultation'
+  | 'conseil';
+
+type BookingService = {
+  id: string;
+  ns: string;
+  link: string;
+  title: string;
+  desc: string;
+  embedId: string;
+  duration: string;
+  priceLabel: string;
+  priceNote?: string;
+};
 
 const Contact: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -25,30 +46,101 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [contactStatus, setContactStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const services = {
+  const services: Record<ServiceKey, BookingService> = {
     resserage: {
       id: 'resserage',
       ns: 'resserage',
-      link: 'martial-n-goyet-nkrhvd/resserage',
+      link: '',
       title: 'Le Resserrage',
       desc: 'Maintenance des racines.',
-      embedId: 'my-cal-inline-resserage'
+      embedId: 'my-cal-inline-resserage',
+      duration: '2h30 - 3h30',
+      priceLabel: 'Entre 65$ et 100$',
+      priceNote: 'Prix final confirmé après consultation.'
     },
     installation: {
       id: '300',
       ns: '300',
-      link: 'martial-n-goyet-nkrhvd/300',
+      link: '',
       title: 'Installation Microlocs',
       desc: 'Début de votre parcours.',
-      embedId: 'my-cal-inline-300'
+      embedId: 'my-cal-inline-300',
+      duration: '5h - 8h',
+      priceLabel: 'Entre 450$ et 600$',
+      priceNote: 'Prix final confirmé après consultation.'
     },
     entretien: {
       id: 'test',
       ns: 'test',
-      link: 'martial-n-goyet-nkrhvd/test',
+      link: '',
       title: 'Entretien de Microlocs',
       desc: 'Soin complet et santé.',
-      embedId: 'my-cal-inline-test'
+      embedId: 'my-cal-inline-test',
+      duration: '1h30 - 2h',
+      priceLabel: '80$'
+    },
+    soin: {
+      id: 'soin',
+      ns: 'soin',
+      link: '',
+      title: 'Traitement (Soin)',
+      desc: 'Hydratation ciblée et douceur.',
+      embedId: 'my-cal-inline-soin',
+      duration: '1h - 1h30',
+      priceLabel: 'Entre 25$ et 35$',
+      priceNote: 'Prix final confirmé après consultation.'
+    },
+    coloration: {
+      id: 'coloration',
+      ns: 'coloration',
+      link: '',
+      title: 'Coloration',
+      desc: 'Teintes sur-mesure.',
+      embedId: 'my-cal-inline-coloration',
+      duration: '2h - 3h',
+      priceLabel: 'Entre 45$ et 85$',
+      priceNote: 'Prix final confirmé après consultation.'
+    },
+    transformation: {
+      id: 'transformation',
+      ns: 'transformation',
+      link: '',
+      title: 'Transformation (Ajout de rallonges)',
+      desc: 'Volume et longueur intégrés.',
+      embedId: 'my-cal-inline-transformation',
+      duration: '2h - 4h',
+      priceLabel: 'Entre 60$ et 150$',
+      priceNote: 'Prix final confirmé après consultation.'
+    },
+    lavage: {
+      id: 'lavage',
+      ns: 'lavage',
+      link: '',
+      title: 'Lavage simple',
+      desc: 'Nettoyage délicat et rafraîchissant.',
+      embedId: 'my-cal-inline-lavage',
+      duration: '45 min - 1h',
+      priceLabel: '35$'
+    },
+    consultation: {
+      id: 'consultation',
+      ns: 'consultation',
+      link: '',
+      title: 'Consultation',
+      desc: 'Analyse capillaire personnalisée.',
+      embedId: 'my-cal-inline-consultation',
+      duration: '30 - 45 min',
+      priceLabel: 'Gratuit'
+    },
+    conseil: {
+      id: 'conseil',
+      ns: 'conseil',
+      link: '',
+      title: 'Conseil personnalisé',
+      desc: 'Guidance pour l’entretien quotidien.',
+      embedId: 'my-cal-inline-conseil',
+      duration: '20 - 30 min',
+      priceLabel: 'Gratuit pour les nouveaux clients'
     }
   };
 
@@ -133,7 +225,7 @@ const Contact: React.FC = () => {
         {activeTab === 'booking' ? (
           <div className="space-y-8 animate-fade-in">
             {/* Service Selector Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
               {(Object.keys(services) as ServiceKey[]).map((key) => (
                 <button
                   key={key}
@@ -147,6 +239,8 @@ const Contact: React.FC = () => {
                   <p className={`text-[10px] uppercase font-bold tracking-widest mb-1 ${selectedService === key ? 'text-aura-gold' : 'text-gray-400'}`}>Service</p>
                   <h4 className="font-serif text-xl font-bold">{services[key].title}</h4>
                   <p className={`text-xs mt-2 ${selectedService === key ? 'text-gray-300' : 'text-gray-500'}`}>{services[key].desc}</p>
+                  <div className={`mt-3 text-[11px] font-semibold ${selectedService === key ? 'text-white' : 'text-aura-dark'}`}>{services[key].priceLabel}</div>
+                  <div className={`text-[10px] uppercase tracking-widest ${selectedService === key ? 'text-aura-gold' : 'text-gray-400'}`}>Durée: {services[key].duration}</div>
                   <div className={`mt-4 flex items-center text-[10px] font-bold uppercase tracking-widest ${selectedService === key ? 'text-aura-gold' : 'text-aura-accent'}`}>
                     Choisir ce service <ChevronRight size={12} className="ml-1" />
                   </div>
@@ -157,6 +251,10 @@ const Contact: React.FC = () => {
             <div className="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-gray-100 p-4 md:p-8 min-h-[700px]">
               <div className="text-center mb-8 space-y-2">
                 <h3 className="text-2xl font-serif font-bold text-aura-dark">Calendrier : {services[selectedService].title}</h3>
+                <p className="text-sm text-gray-500">{services[selectedService].priceLabel} • {services[selectedService].duration}</p>
+                {services[selectedService].priceNote && (
+                  <p className="text-[11px] text-aura-accent uppercase tracking-widest">{services[selectedService].priceNote}</p>
+                )}
                 <div className="flex items-center justify-center gap-6 pt-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">
                   <span className="flex items-center gap-1.5"><Lock size={12} className="text-aura-gold"/> Sécurisé</span>
                   <span className="flex items-center gap-1.5"><Sparkles size={12} className="text-aura-gold"/> Confirmation Immédiate</span>
@@ -171,7 +269,7 @@ const Contact: React.FC = () => {
               <div className="mt-8 p-6 bg-aura-light rounded-2xl flex items-start gap-4 border border-aura-gold/10">
                 <Info className="text-aura-gold flex-shrink-0 mt-1" size={20} />
                 <p className="text-xs text-aura-dark/70 leading-relaxed">
-                  <strong>Note sur la réservation :</strong> Veuillez choisir une date et une heure qui vous conviennent. Vous recevrez un courriel de confirmation immédiatement après la validation.
+                  <strong>Note sur la réservation :</strong> Veuillez choisir une date et une heure qui vous conviennent. Vous recevrez un courriel de confirmation immédiatement après la validation. Pour les tarifs variables, le prix final est confirmé après consultation. En cas d'acompte, il est calculé sur le prix minimum.
                 </p>
               </div>
             </div>
@@ -252,7 +350,7 @@ const Contact: React.FC = () => {
                 </div>
                 <button 
                   disabled={isSubmitting}
-                  className="w-full bg-aura-dark text-white py-6 rounded-2xl font-bold uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-4 hover:bg-aura-accent transition shadow-2xl disabled:opacity-50 group"
+                  className="w-full bg-aura-accent text-white py-6 rounded-2xl font-bold uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-4 hover:bg-aura-dark transition shadow-2xl disabled:opacity-50 group"
                 >
                   {isSubmitting ? "Transmission en cours..." : "Transmettre ma demande"} <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>

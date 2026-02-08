@@ -130,7 +130,7 @@ const Checkout: React.FC<CheckoutProps> = ({ cart, clearCart }) => {
           <div className="w-20 h-20 bg-aura-light rounded-full flex items-center justify-center mx-auto text-aura-gold"><ShoppingBag size={40} /></div>
           <h2 className="font-serif text-3xl font-bold text-aura-dark">Votre panier est vide</h2>
           <p className="text-gray-500">Ajoutez des produits de notre boutique pour procéder au paiement.</p>
-          <Link to="/services" className="inline-block bg-aura-dark text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-aura-gold transition shadow-xl">Voir la boutique</Link>
+          <Link to="/services" className="inline-block bg-aura-accent text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-aura-dark transition shadow-xl">Voir la boutique</Link>
         </div>
       </div>
     );
@@ -147,6 +147,12 @@ const Checkout: React.FC<CheckoutProps> = ({ cart, clearCart }) => {
           </button>
 
           <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full border-2 border-aura-gold flex items-center justify-center overflow-hidden">
+                <img src="https://ik.imagekit.io/u4lig2jm2f/626685180_2354594188318781_3570031940854477105_n-removebg-preview.png" alt="Aura Microlocs" className="w-7 h-7 object-contain" />
+              </div>
+              <span className="font-serif text-lg tracking-widest text-aura-gold uppercase">Aura</span>
+            </div>
             <h1 className="font-serif text-4xl md:text-5xl text-aura-dark font-bold tracking-tight">Paiement Sécurisé</h1>
             <p className="text-gray-500">Propulsé par Stripe - Leader mondial des paiements en ligne.</p>
           </div>
@@ -195,7 +201,7 @@ const Checkout: React.FC<CheckoutProps> = ({ cart, clearCart }) => {
                 <button 
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full bg-aura-dark text-white py-5 rounded-2xl font-bold uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-4 hover:bg-aura-accent transition shadow-2xl disabled:opacity-50 group"
+                  className="w-full bg-aura-accent text-white py-5 rounded-2xl font-bold uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-4 hover:bg-aura-dark transition shadow-2xl disabled:opacity-50 group"
                 >
                   {isProcessing ? <Loader2 className="animate-spin" size={18} /> : null}
                   {isProcessing ? "Liaison avec Stripe..." : "Payer maintenant"} 

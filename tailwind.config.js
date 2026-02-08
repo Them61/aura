@@ -9,9 +9,10 @@ export default {
     extend: {
       colors: {
         aura: {
-          gold: '#C5A059',
-          dark: '#0A0F1C',
-          accent: '#CC5500',
+          gold: '#3DD9C9',
+          dark: '#202A25',
+          accent: '#FF6700',
+          red: '#A50104',
           light: '#F9F5F0'
         }
       },

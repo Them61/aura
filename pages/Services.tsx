@@ -113,9 +113,9 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
             <div className="bg-aura-light p-6 rounded-2xl border-l-4 border-aura-gold space-y-4">
               <h4 className="font-bold text-aura-dark flex items-center"><Check className="text-aura-gold mr-3" size={20} /> Inclus dans le service :</h4>
               <ul className="space-y-3 text-sm text-gray-700 ml-8 list-disc">
-                <li>Consultation capillaire approfondie</li>
                 <li>Installation artisanale (grille personnalisée)</li>
                 <li>Trousse de démarrage et conseils de suivi</li>
+                <li>Conseils de suivi personnalisés</li>
               </ul>
             </div>
             <div className="pt-8 border-t border-gray-100 flex flex-wrap justify-between items-center gap-6">
@@ -127,7 +127,7 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
                   </div>
                </div>
                {/* Link used here */}
-               <Link to="/contact?tab=booking&service=installation" className="bg-aura-dark text-white px-10 py-4 rounded-full hover:bg-aura-gold transition duration-300 shadow-xl font-bold">Réserver (600.00$)</Link>
+               <Link to="/contact?tab=booking&service=installation" className="bg-aura-accent text-white px-10 py-4 rounded-full hover:bg-aura-dark transition duration-300 shadow-xl font-bold">Réserver (Entre 450$ et 600$)</Link>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
                   </div>
                </div>
                {/* Link used here */}
-               <Link to="/contact?tab=booking&service=entretien" className="bg-aura-dark text-white px-10 py-4 rounded-full hover:bg-aura-gold transition duration-300 shadow-xl font-bold">Réserver (80.00$)</Link>
+               <Link to="/contact?tab=booking&service=entretien" className="bg-aura-accent text-white px-10 py-4 rounded-full hover:bg-aura-dark transition duration-300 shadow-xl font-bold">Réserver (80.00$)</Link>
             </div>
           </div>
         </div>
@@ -190,8 +190,89 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
                   </div>
                </div>
                {/* Link used here */}
-               <Link to="/contact?tab=booking&service=resserage" className="bg-aura-dark text-white px-10 py-4 rounded-full hover:bg-aura-gold transition duration-300 shadow-xl font-bold">Réserver (130.00$)</Link>
+               <Link to="/contact?tab=booking&service=resserage" className="bg-aura-accent text-white px-10 py-4 rounded-full hover:bg-aura-dark transition duration-300 shadow-xl font-bold">Réserver (Entre 65$ et 100$)</Link>
             </div>
+          </div>
+        </div>
+
+        {/* Services Complémentaires */}
+        <div className="space-y-10">
+          <div className="text-center">
+            <h3 className="font-serif text-4xl text-aura-dark font-bold uppercase tracking-widest">Services Complémentaires</h3>
+            <div className="w-20 h-1 bg-aura-gold mx-auto mt-4 mb-6"></div>
+            <p className="text-gray-500 max-w-2xl mx-auto italic">Des attentions sur-mesure pour révéler toute l'élégance de vos microlocs.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-aura-accent">Soin</span>
+              <h4 className="font-serif text-2xl text-aura-dark font-bold mt-2">Traitement (Soin)</h4>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">Hydratation ciblée et douceur artisanale pour raviver la vitalité des locs.</p>
+              <div className="mt-6 flex items-center justify-between text-sm font-semibold text-aura-dark">
+                <span>Entre 25$ et 35$</span>
+                <span className="text-xs text-gray-400 uppercase tracking-widest">1h - 1h30</span>
+              </div>
+              <Link to="/contact?tab=booking&service=soin" className="mt-6 bg-aura-accent text-white px-6 py-3 rounded-full hover:bg-aura-dark transition duration-300 text-sm font-bold text-center">Réserver</Link>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-aura-accent">Couleur</span>
+              <h4 className="font-serif text-2xl text-aura-dark font-bold mt-2">Coloration</h4>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">Teintes élégantes et techniques douces pour sublimer sans compromettre la santé capillaire.</p>
+              <div className="mt-6 flex items-center justify-between text-sm font-semibold text-aura-dark">
+                <span>Entre 45$ et 85$</span>
+                <span className="text-xs text-gray-400 uppercase tracking-widest">2h - 3h</span>
+              </div>
+              <Link to="/contact?tab=booking&service=coloration" className="mt-6 bg-aura-accent text-white px-6 py-3 rounded-full hover:bg-aura-dark transition duration-300 text-sm font-bold text-center">Réserver</Link>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-aura-accent">Transformation</span>
+              <h4 className="font-serif text-2xl text-aura-dark font-bold mt-2">Ajout de rallonges</h4>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">Volume et longueur parfaitement intégrés pour une transformation harmonieuse.</p>
+              <div className="mt-6 flex items-center justify-between text-sm font-semibold text-aura-dark">
+                <span>Entre 60$ et 150$</span>
+                <span className="text-xs text-gray-400 uppercase tracking-widest">2h - 4h</span>
+              </div>
+              <Link to="/contact?tab=booking&service=transformation" className="mt-6 bg-aura-accent text-white px-6 py-3 rounded-full hover:bg-aura-dark transition duration-300 text-sm font-bold text-center">Réserver</Link>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-aura-accent">Lavage</span>
+              <h4 className="font-serif text-2xl text-aura-dark font-bold mt-2">Lavage simple</h4>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">Nettoyage délicat et rafraîchissant pour un cuir chevelu sain.</p>
+              <div className="mt-6 flex items-center justify-between text-sm font-semibold text-aura-dark">
+                <span>35$</span>
+                <span className="text-xs text-gray-400 uppercase tracking-widest">45 min - 1h</span>
+              </div>
+              <Link to="/contact?tab=booking&service=lavage" className="mt-6 bg-aura-accent text-white px-6 py-3 rounded-full hover:bg-aura-dark transition duration-300 text-sm font-bold text-center">Réserver</Link>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-aura-accent">Consultation</span>
+              <h4 className="font-serif text-2xl text-aura-dark font-bold mt-2">Consultation</h4>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">Analyse capillaire et plan personnalisé pour démarrer ou ajuster votre parcours.</p>
+              <div className="mt-6 flex items-center justify-between text-sm font-semibold text-aura-dark">
+                <span>Gratuit</span>
+                <span className="text-xs text-gray-400 uppercase tracking-widest">30 - 45 min</span>
+              </div>
+              <Link to="/contact?tab=booking&service=consultation" className="mt-6 bg-aura-accent text-white px-6 py-3 rounded-full hover:bg-aura-dark transition duration-300 text-sm font-bold text-center">Réserver</Link>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-aura-accent">Conseil</span>
+              <h4 className="font-serif text-2xl text-aura-dark font-bold mt-2">Conseil personnalisé</h4>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">Guidance experte pour entretenir vos microlocs au quotidien avec sérénité.</p>
+              <div className="mt-6 flex items-center justify-between text-sm font-semibold text-aura-dark">
+                <span>Gratuit pour les nouveaux clients</span>
+                <span className="text-xs text-gray-400 uppercase tracking-widest">20 - 30 min</span>
+              </div>
+              <Link to="/contact?tab=booking&service=conseil" className="mt-6 bg-aura-accent text-white px-6 py-3 rounded-full hover:bg-aura-dark transition duration-300 text-sm font-bold text-center">Réserver</Link>
+            </div>
+          </div>
+
+          <div className="text-center text-xs uppercase tracking-widest text-gray-400">
+            Prix final confirmé après consultation pour les services à tarif variable.
           </div>
         </div>
       </section>
@@ -203,6 +284,7 @@ const Services: React.FC<ServicesProps> = ({ addToCart }) => {
                 <h2 className="font-serif text-5xl text-aura-dark font-bold mb-4 tracking-tight">La Boutique Aura</h2>
                 <div className="w-24 h-1 bg-aura-gold mx-auto mb-8"></div>
                 <p className="text-gray-500 font-light max-w-2xl mx-auto text-lg leading-relaxed italic">"Ma vision c'est d'aider les gens à garder leurs cheveux naturels et propres à tout moment à prix abordable."</p>
+                <p className="mt-4 text-[11px] uppercase tracking-widest text-aura-accent font-bold">Vente de rallonges : prix varient selon la demande</p>
                 <div className="flex flex-col items-center mt-8">
                     <p className="text-[10px] text-aura-accent font-bold uppercase tracking-widest flex items-center gap-2 bg-aura-light px-4 py-2 rounded-full"><Lock size={12} /> Transactions sécurisées par Stripe</p>
                     <div className="flex gap-6 mt-6 opacity-40 grayscale hover:grayscale-0 transition duration-500">

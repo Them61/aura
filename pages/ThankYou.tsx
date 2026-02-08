@@ -205,6 +205,12 @@ const ThankYou: React.FC<ThankYouProps> = ({ clearCart }) => {
         
         {/* Success Animation */}
         <div className="text-center mb-12 animate-fade-in">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="w-12 h-12 rounded-full border-2 border-aura-gold flex items-center justify-center overflow-hidden bg-white">
+              <img src="https://ik.imagekit.io/u4lig2jm2f/626685180_2354594188318781_3570031940854477105_n-removebg-preview.png" alt="Aura Microlocs" className="w-8 h-8 object-contain" />
+            </div>
+            <span className="font-serif text-xl tracking-widest text-aura-gold uppercase">Aura</span>
+          </div>
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
             <CheckCircle size={48} className="text-green-600" />
           </div>

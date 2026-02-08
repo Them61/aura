@@ -17,12 +17,11 @@ export const AGENT_CONTEXT = {
       {
         id: "installation",
         name: "Installation de Microlocs",
-        price: 600,
+        price: "Entre 450 et 600",
         currency: "CAD",
         duration: "5 à 8 heures",
         description: "Création de la grille artisanale et installation initiale.",
         includes: [
-          "Consultation capillaire approfondie",
           "Trousse de démarrage (shampooing, instructions)",
           "Conseils de suivi personnalisés"
         ],
@@ -33,7 +32,7 @@ export const AGENT_CONTEXT = {
         name: "Entretien Expert (Soin Complet)",
         price: 80,
         currency: "CAD",
-        duration: "Variable",
+        duration: "1h30 à 2h",
         description: "Soin complet de revitalisation pour maintenir la santé des locs.",
         process: [
           "Lavage clarifiant en profondeur",
@@ -45,18 +44,66 @@ export const AGENT_CONTEXT = {
       {
         id: "resserage",
         name: "Le Resserrage (Maintenance)",
-        price: 130,
+        price: "Entre 65 et 100",
         currency: "CAD",
         duration: "2h30 à 3h30",
         description: "Technique de précision pour maintenir les racines nettes et sans tension.",
         importance: "Clé de la longévité et de la santé des microlocs."
+      },
+      {
+        id: "soin",
+        name: "Traitement (Soin)",
+        price: "Entre 25 et 35",
+        currency: "CAD",
+        duration: "1h à 1h30",
+        description: "Hydratation ciblée et douceur artisanale pour raviver la vitalité des locs."
+      },
+      {
+        id: "coloration",
+        name: "Coloration",
+        price: "Entre 45 et 85",
+        currency: "CAD",
+        duration: "2h à 3h",
+        description: "Teintes élégantes et techniques douces pour sublimer les microlocs."
+      },
+      {
+        id: "transformation",
+        name: "Transformation (Ajout de rallonges)",
+        price: "Entre 60 et 150",
+        currency: "CAD",
+        duration: "2h à 4h",
+        description: "Volume et longueur parfaitement intégrés pour une transformation harmonieuse."
+      },
+      {
+        id: "lavage",
+        name: "Lavage simple",
+        price: 35,
+        currency: "CAD",
+        duration: "45 min à 1h",
+        description: "Nettoyage délicat et rafraîchissant pour un cuir chevelu sain."
+      },
+      {
+        id: "consultation",
+        name: "Consultation",
+        price: "Gratuit",
+        currency: "CAD",
+        duration: "30 à 45 min",
+        description: "Analyse capillaire et plan personnalisé avant le service."
+      },
+      {
+        id: "conseil",
+        name: "Conseil personnalisé",
+        price: "Gratuit pour les nouveaux clients",
+        currency: "CAD",
+        duration: "20 à 30 min",
+        description: "Guidance experte pour l'entretien quotidien des microlocs."
       }
     ],
     
     boutique: {
       items: [
         { name: "Huiles de cheveux naturels", price: 35, category: "Soin" },
-        { name: "Mèches transformation Sisterlocks", price: 45, category: "Extensions" },
+        { name: "Mèches transformation Sisterlocks", price: "Variable", category: "Extensions" },
         { name: "Crochet de resserrage professionnel", price: 25, category: "Accessoire" },
         { name: "Shampooing Clarifiant", price: 28, category: "Lavage" },
         { name: "Bonnet Satin de luxe", price: 15, category: "Accessoire" }
@@ -99,7 +146,7 @@ export const AGENT_CONTEXT = {
     "Vouvoiement obligatoire (sauf si l'utilisateur tutoie en premier).",
     "Précision absolue sur les prix : ne jamais donner de rabais sans instruction.",
     "Réponses concises : 3 phrases maximum par message.",
-    "Si l'utilisateur est indécis, proposer une consultation (incluse dans l'installation).",
+    "Si l'utilisateur est indécis, proposer une consultation gratuite.",
     "Toujours mentionner que le studio est à Québec.",
     "Pour toute question complexe ou médicale, rediriger vers Alice au 438-933-6195."
   ],
@@ -112,10 +159,10 @@ export const AGENT_CONTEXT = {
       TON : ${this.identity.tone}.
       
       SERVICES & PRIX :
-      ${this.business_data.services.map(s => `- ${s.name} : ${s.price}$ (${s.duration}). ${s.description}`).join('\n')}
+      ${this.business_data.services.map(s => `- ${s.name} : ${s.price}${typeof s.price === 'number' ? '$' : ''} (${s.duration}). ${s.description}`).join('\n')}
       
       BOUTIQUE & TAXES :
-      - Produits : ${this.business_data.boutique.items.map(i => `${i.name} (${i.price}$)`).join(', ')}
+      - Produits : ${this.business_data.boutique.items.map(i => `${i.name} (${i.price}${typeof i.price === 'number' ? '$' : ''})`).join(', ')}
       - Taxes : Rappeler que 14.975% de taxes s'ajoutent au panier.
       - Paiement : Stripe sécurisé.
       

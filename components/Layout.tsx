@@ -12,19 +12,19 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path ? 'text-aura-accent font-bold' : 'text-aura-light hover:text-aura-gold transition-colors';
+  const isActive = (path: string) => location.pathname === path ? 'text-aura-accent font-bold' : 'text-aura-light hover:text-white transition-colors';
   const mobileActive = (path: string) => location.pathname === path ? 'text-aura-accent pl-4 border-l-4 border-aura-accent' : 'text-aura-dark pl-4 border-l-4 border-transparent';
 
   return (
     <div className="flex flex-col min-h-screen font-sans">
-      <nav className="bg-aura-dark text-white sticky top-0 z-50 shadow-lg border-b border-aura-gold/30">
+      <nav className="bg-aura-gold text-white sticky top-0 z-50 shadow-lg border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             <Link to="/" className="flex items-center space-x-2 group">
-               <div className="w-10 h-10 border-2 border-aura-gold rounded-full flex items-center justify-center group-hover:bg-aura-gold transition-colors duration-300">
-                  <span className="font-serif text-aura-gold group-hover:text-aura-dark text-xl font-bold italic">A</span>
-               </div>
-               <span className="font-serif text-2xl tracking-widest text-aura-gold uppercase">Aura</span>
+              <div className="w-10 h-10 border-2 border-white/80 rounded-full flex items-center justify-center group-hover:bg-white transition-colors duration-300 overflow-hidden">
+                <img src="https://ik.imagekit.io/u4lig2jm2f/626685180_2354594188318781_3570031940854477105_n-removebg-preview.png" alt="Aura Microlocs" className="w-7 h-7 object-contain" />
+              </div>
+              <span className="font-serif text-2xl tracking-widest text-white uppercase">Aura</span>
             </Link>
 
             <div className="hidden md:flex space-x-8 items-center">
@@ -32,8 +32,8 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
               <Link to="/services" className={isActive('/services')}>SERVICES & PRODUITS</Link>
               <Link to="/contact" className={isActive('/contact')}>CONTACT</Link>
               
-              <div className="flex items-center space-x-4 ml-4 pl-4 border-l border-white/10">
-                <button onClick={onCartClick} className="relative p-2 text-aura-light hover:text-aura-gold transition-colors">
+              <div className="flex items-center space-x-4 ml-4 pl-4 border-l border-white/30">
+                <button onClick={onCartClick} className="relative p-2 text-white/90 hover:text-white transition-colors">
                   <ShoppingBag size={22} />
                   {cartCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-aura-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-aura-dark">
@@ -42,14 +42,14 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
                   )}
                 </button>
 
-                <Link to="/contact?tab=booking" className="bg-aura-gold text-aura-dark px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-aura-accent transition-all duration-300 transform hover:scale-105">
+                <Link to="/contact?tab=booking" className="bg-aura-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-aura-accent transition-all duration-300 transform hover:scale-105">
                   RÉSERVER
                 </Link>
               </div>
             </div>
 
             <div className="md:hidden flex items-center space-x-4">
-              <button onClick={onCartClick} className="relative p-2 text-aura-gold">
+              <button onClick={onCartClick} className="relative p-2 text-white">
                 <ShoppingBag size={24} />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-white text-aura-dark text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
@@ -57,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
                   </span>
                 )}
               </button>
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-aura-gold">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
                 {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
               </button>
             </div>
@@ -70,7 +70,7 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
               <Link to="/" onClick={() => setIsMenuOpen(false)} className={`block py-3 text-lg font-medium ${mobileActive('/')}`}>ACCUEIL</Link>
               <Link to="/services" onClick={() => setIsMenuOpen(false)} className={`block py-3 text-lg font-medium ${mobileActive('/services')}`}>SERVICES & PRODUITS</Link>
               <Link to="/contact" onClick={() => setIsMenuOpen(false)} className={`block py-3 text-lg font-medium ${mobileActive('/contact')}`}>CONTACT</Link>
-              <Link to="/contact?tab=booking" onClick={() => setIsMenuOpen(false)} className="mx-4 mt-4 text-center bg-aura-dark text-aura-gold py-3 rounded-md font-bold uppercase tracking-wide">
+              <Link to="/contact?tab=booking" onClick={() => setIsMenuOpen(false)} className="mx-4 mt-4 text-center bg-aura-accent text-white py-3 rounded-md font-bold uppercase tracking-wide">
                 Réserver maintenant
               </Link>
             </div>
@@ -85,14 +85,14 @@ const Layout: React.FC<LayoutProps> = ({ children, cartCount, onCartClick }) => 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12">
             <div className="space-y-8">
-              <Link to="/" className="flex items-center space-x-3 group">
-                 <div className="w-14 h-14 border-2 border-aura-gold rounded-full flex items-center justify-center group-hover:bg-aura-gold transition-all duration-500 shadow-lg shadow-aura-gold/10">
-                    <span className="font-serif text-aura-gold group-hover:text-aura-dark text-3xl font-bold italic">A</span>
-                 </div>
-                 <div className="flex flex-col">
+                <Link to="/" className="flex items-center space-x-3 group">
+                  <div className="w-14 h-14 border-2 border-aura-gold rounded-full flex items-center justify-center group-hover:bg-aura-gold transition-all duration-500 shadow-lg shadow-aura-gold/10 overflow-hidden">
+                    <img src="https://ik.imagekit.io/u4lig2jm2f/626685180_2354594188318781_3570031940854477105_n-removebg-preview.png" alt="Aura Microlocs" className="w-10 h-10 object-contain" />
+                  </div>
+                  <div className="flex flex-col">
                     <span className="font-serif text-3xl tracking-[0.2em] text-aura-gold uppercase font-bold leading-none">Aura</span>
-                 </div>
-              </Link>
+                  </div>
+                </Link>
               <p className="text-gray-400 font-light text-sm leading-relaxed max-w-sm">
                 L'élégance naturelle à Québec. Expertise artisanale dédiée aux microlocs.
               </p>

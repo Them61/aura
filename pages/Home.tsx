@@ -23,33 +23,27 @@ const Home: React.FC = () => {
   const realizations = [
     {
       type: 'video',
-      url: 'https://ik.imagekit.io/u4lig2jm2f/AQPIT9ob2DODz0SL8GqPDOYoqJFXCDyxHVyTTAJiQW-n8jj83xpmZv-k2OPLW1gEWdfV7z7bXyztY5KuOOoKLecKdv6qWD8uf7nrPOLAQQ.mp4',
-      alt: 'Résultat installation microlocs Aura Studio - Détail et brillance',
-      title: 'Détail installation de microlocs experte'
+      url: 'https://ik.imagekit.io/u4lig2jm2f/AQM-a_hWzAUnS2BwBAFjB6Kikn7CIAXul1dcgvp2ve7ng-c8gDh_Qdd75_KwNXMdQSs8uQRG_kdDOooyFelh_Nh_6atS2D57yJlurRxRUg.mp4',
+      alt: 'Vidéo de réalisation Aura Microlocs - brillance et finition',
+      title: 'Aura Signature en vidéo'
     },
     {
       type: 'image',
-      url: 'https://ik.imagekit.io/u4lig2jm2f/576095716_2014224022660891_818868447080233546_n.jpg',
-      alt: 'Portrait de microlocs après installation complète Aura Studio',
-      title: 'Microlocs Installation Portrait'
+      url: 'https://ik.imagekit.io/u4lig2jm2f/623392546_2081681696010631_2934393250477194472_n.jpg',
+      alt: 'Réalisation Aura Microlocs - installation soignée',
+      title: 'Installation Signature Aura'
     },
     {
       type: 'image',
-      url: 'https://ik.imagekit.io/u4lig2jm2f/574565763_804653252379442_2926939056557316950_n.jpg',
-      alt: 'Détail du resserrage des racines sur microlocs matures',
-      title: 'Entretien et Maintenance Microlocs'
+      url: 'https://ik.imagekit.io/u4lig2jm2f/627494581_1202672192026235_7555114864929840735_n.jpg',
+      alt: 'Réalisation Aura Microlocs - volume et finesse',
+      title: 'Résultat Élégant Microlocs'
     },
     {
       type: 'image',
-      url: 'https://ik.imagekit.io/u4lig2jm2f/615421736_857469200376697_2396014384706661373_n.jpg',
-      alt: 'Réalisation Aura Microlocs Québec - Style et santé capillaire',
-      title: 'Résultat Microlocs Professionnel'
-    },
-    {
-      type: 'image',
-      url: 'https://ik.imagekit.io/u4lig2jm2f/613354850_855481070701426_3628782886450825214_n%20(1).jpg',
-      alt: 'Gros plan sur des microlocs parfaitement entretenues à Québec',
-      title: 'Maintenance Microlocs Perfection'
+      url: 'https://ik.imagekit.io/u4lig2jm2f/627764165_1708972877176402_5164283954527053851_n.jpg',
+      alt: 'Réalisation Aura Microlocs - finition impeccable',
+      title: 'Finition Impeccable Aura'
     }
   ];
 
@@ -61,7 +55,7 @@ const Home: React.FC = () => {
       <section id="hero" className="relative h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://i.im.ge/2026/01/16/GwAmAp.Brown-Macro-Coffee-Brand-Guidelines-Presentation.png" 
+            src="https://ik.imagekit.io/u4lig2jm2f/Cr%C3%A9ation%20sans%20titre%20(5).png" 
             alt="Aura Microlocs - Spécialiste cheveux naturels et microlocs à Québec" 
             title="Aura Microlocs Studio"
             width="1920"
@@ -82,7 +76,7 @@ const Home: React.FC = () => {
             Des locs impeccables, des cheveux en bonne santé, un service personnalisé.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/contact?tab=booking" className="bg-aura-gold text-aura-dark px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-white hover:text-aura-accent transition duration-300 transform hover:-translate-y-1 shadow-lg">
+            <Link to="/contact?tab=booking" className="bg-aura-accent text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-white hover:text-aura-accent transition duration-300 transform hover:-translate-y-1 shadow-lg">
               Réserver mon rendez-vous
             </Link>
             <Link to="/services" className="border-2 border-white text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-white hover:text-aura-dark transition duration-300">
@@ -106,7 +100,7 @@ const Home: React.FC = () => {
               loading="lazy"
               className="relative z-10 rounded-lg shadow-2xl object-cover h-[500px] w-full"
             />
-            <div className="absolute -bottom-6 -right-6 bg-aura-dark text-white p-6 rounded-lg shadow-xl z-20 max-w-xs hidden md:block">
+            <div className="absolute -bottom-6 -right-6 bg-aura-gold text-white p-6 rounded-lg shadow-xl z-20 max-w-xs hidden md:block">
               <p className="font-serif italic text-lg">"La perfection est dans les détails."</p>
             </div>
           </div>
@@ -138,7 +132,7 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border border-transparent hover:border-aura-gold group">
-              <div className="w-14 h-14 bg-aura-dark text-aura-gold rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-gold group-hover:text-white transition">
+              <div className="w-14 h-14 bg-aura-red text-white rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-dark group-hover:text-white transition">
                 <Star size={24} />
               </div>
               <h3 className="font-serif text-xl font-bold text-aura-dark mb-3">Installation Complète</h3>
@@ -148,7 +142,7 @@ const Home: React.FC = () => {
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border border-transparent hover:border-aura-gold group">
-              <div className="w-14 h-14 bg-aura-dark text-aura-gold rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-gold group-hover:text-white transition">
+              <div className="w-14 h-14 bg-aura-red text-white rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-dark group-hover:text-white transition">
                 <Heart size={24} />
               </div>
               <h3 className="font-serif text-xl font-bold text-aura-dark mb-3">Entretien Expert</h3>
@@ -158,7 +152,7 @@ const Home: React.FC = () => {
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border border-transparent hover:border-aura-gold group">
-               <div className="w-14 h-14 bg-aura-dark text-aura-gold rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-gold group-hover:text-white transition">
+              <div className="w-14 h-14 bg-aura-red text-white rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-dark group-hover:text-white transition">
                 <Clock size={24} />
               </div>
               <h3 className="font-serif text-xl font-bold text-aura-dark mb-3">Resserrage</h3>
@@ -168,7 +162,7 @@ const Home: React.FC = () => {
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border border-transparent hover:border-aura-gold group">
-               <div className="w-14 h-14 bg-aura-dark text-aura-gold rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-gold group-hover:text-white transition">
+              <div className="w-14 h-14 bg-aura-red text-white rounded-full flex items-center justify-center mb-6 group-hover:bg-aura-dark group-hover:text-white transition">
                 <ShieldCheck size={24} />
               </div>
               <h3 className="font-serif text-xl font-bold text-aura-dark mb-3">Produits</h3>
@@ -187,36 +181,36 @@ const Home: React.FC = () => {
       </section>
 
       {/* Trust Section */}
-      <section className="py-20 bg-aura-dark text-white">
+      <section className="py-20 bg-aura-gold text-white">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="space-y-8 text-left">
-            <h2 className="font-serif text-4xl text-aura-gold">Pourquoi nous faire confiance?</h2>
+            <h2 className="font-serif text-4xl text-white">Pourquoi nous faire confiance?</h2>
             <div className="space-y-6">
               <div className="flex">
                 <div className="flex-shrink-0 mr-4">
-                  <div className="w-2 h-full bg-aura-gold rounded-full"></div>
+                  <div className="w-2 h-full bg-white/80 rounded-full"></div>
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-1 text-white">Expertise Professionnelle</h4>
-                  <p className="text-gray-400 text-sm">Des années d'expérience et une formation continue pour maîtriser les techniques les plus récentes.</p>
+                  <p className="text-white/80 text-sm">Des années d'expérience et une formation continue pour maîtriser les techniques les plus récentes.</p>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex-shrink-0 mr-4">
-                  <div className="w-2 h-full bg-aura-gold rounded-full"></div>
+                  <div className="w-2 h-full bg-white/80 rounded-full"></div>
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-1 text-white">Approche Personnalisée</h4>
-                  <p className="text-gray-400 text-sm">Chaque tête est unique. Nous prenons le temps d'écouter vos besoins.</p>
+                  <p className="text-white/80 text-sm">Chaque tête est unique. Nous prenons le temps d'écouter vos besoins.</p>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex-shrink-0 mr-4">
-                  <div className="w-2 h-full bg-aura-gold rounded-full"></div>
+                  <div className="w-2 h-full bg-white/80 rounded-full"></div>
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-1 text-white">Service Complet</h4>
-                  <p className="text-gray-400 text-sm">De l'installation au resserrage, en passant par les produits : tout sous un même toit.</p>
+                  <p className="text-white/80 text-sm">De l'installation au resserrage, en passant par les produits : tout sous un même toit.</p>
                 </div>
               </div>
             </div>
@@ -224,7 +218,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
              <div className="rounded-xl overflow-hidden aspect-[9/16] shadow-2xl border border-white/10 bg-white/5 flex items-center justify-center">
                 <img 
-                  src="https://ik.imagekit.io/u4lig2jm2f/47681581_300619553907971_1846817773863305216_n.jpg" 
+                  src="https://ik.imagekit.io/u4lig2jm2f/623294466_1196147639253956_6772045473313337894_n.jpg" 
                   alt="Réalisation signature Aura Microlocs Québec" 
                   title="Expertise Confiance Aura"
                   width="300"
@@ -235,7 +229,7 @@ const Home: React.FC = () => {
              </div>
              <div className="rounded-xl overflow-hidden aspect-[9/16] shadow-2xl border border-white/10 bg-white/5 mt-6 md:mt-12">
                <img 
-                 src="https://ik.imagekit.io/u4lig2jm2f/613354850_855481070701426_3628782886450825214_n%20(1).jpg" 
+                 src="https://ik.imagekit.io/u4lig2jm2f/622678880_1266810671959946_7914362342006340010_n.jpg" 
                  alt="Détail entretien microlocs professionnelles Québec" 
                  title="Expertise Microlocs Aura"
                  width="300"
@@ -319,7 +313,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-aura-accent relative overflow-hidden">
+      <section className="py-24 bg-aura-gold relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-aura-dark/10 rounded-full blur-3xl"></div>
         
@@ -327,10 +321,10 @@ const Home: React.FC = () => {
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">Prêt(e) à Transformer Vos Cheveux?</h2>
           <p className="text-xl mb-10 opacity-90">Ne laissez plus vos cheveux attendre. Découvrez la différence d'un service professionnel.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-             <Link to="/contact?tab=booking" className="bg-white text-aura-accent px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-aura-dark hover:text-white transition duration-300 shadow-xl">
+             <Link to="/contact?tab=booking" className="bg-aura-accent text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-white hover:text-aura-accent transition duration-300 shadow-xl">
                Réserver maintenant
              </Link>
-             <Link to="/contact?tab=contact" className="border-2 border-white text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-white/20 transition duration-300">
+             <Link to="/contact?tab=contact" className="border-2 border-aura-accent text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-aura-accent transition duration-300">
                Nous contacter
              </Link>
           </div>
